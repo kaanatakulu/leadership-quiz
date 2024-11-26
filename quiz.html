@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership Style Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question label {
+            display: block;
+            margin: 10px 0;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+        #qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #link {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        #link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Leadership Style Quiz</h1>
+        <form id="quiz-form">
+            <!-- Questions -->
+            <div class="question">
+                <p>1. I ensure tasks are completed on time, even if it requires strict rules.</p>
+                <label><input type="radio" name="q1" value="1"> Strongly Disagree</label>
+                <label><input type="radio" name="q1" value="2"> Disagree</label>
+                <label><input type="radio" name="q1" value="3"> Neutral</label>
+                <label><input type="radio" name="q1" value="4"> Agree</label>
+                <label><input type="radio" name="q1" value="5"> Strongly Agree</label>
+            </div>
+            <div class="question">
+                <p>2. I set high standards for myself and my team to achieve excellence.</p>
+                <label><input type="radio" name="q2" value="1"> Strongly Disagree</label>
+                <label><input type="radio" name="q2" value="2"> Disagree</label>
+                <label><input type="radio" name="q2" value="3"> Neutral</label>
+                <label><input type="radio" name="q2" value="4"> Agree</label>
+                <label><input type="radio" name="q2" value="5"> Strongly Agree</label>
+            </div>
+            <div class="question">
+                <p>3. I focus on supporting and developing my team through feedback.</p>
+                <label><input type="radio" name="q3" value="1"> Strongly Disagree</label>
+                <label><input type="radio" name="q3" value="2"> Disagree</label>
+                <label><input type="radio" name="q3" value="3"> Neutral</label>
+                <label><input type="radio" name="q3" value="4"> Agree</label>
+                <label><input type="radio" name="q3" value="5"> Strongly Agree</label>
+            </div>
+            <div class="question">
+                <p>4. I prioritize fostering a collaborative and positive atmosphere for my team.</p>
+                <label><input type="radio" name="q4" value="1"> Strongly Disagree</label>
+                <label><input type="radio" name="q4" value="2"> Disagree</label>
+                <label><input type="radio" name="q4" value="3"> Neutral</label>
+                <label><input type="radio" name="q4" value="4"> Agree</label>
+                <label><input type="radio" name="q4" value="5"> Strongly Agree</label>
+            </div>
+            <div class="question">
+                <p>5. I communicate a clear vision and inspire my team to achieve long-term goals.</p>
+                <label><input type="radio" name="q5" value="1"> Strongly Disagree</label>
+                <label><input type="radio" name="q5" value="2"> Disagree</label>
+                <label><input type="radio" name="q5" value="3"> Neutral</label>
+                <label><input type="radio" name="q5" value="4"> Agree</label>
+                <label><input type="radio" name="q5" value="5"> Strongly Agree</label>
+            </div>
+            <button type="button" class="submit-btn" onclick="calculateResult()">Submit</button>
+        </form>
+        <div id="result"></div>
+        <div id="qr-code"></div>
+        <a id="link" href="#" target="_blank">Copyable Link to the Quiz</a>
+    </div>
+
+    <script>
+        function calculateResult() {
+            const form = document.getElementById('quiz-form');
+            const answers = new FormData(form);
+            let totalScore = 0;
+
+            for (let value of answers.values()) {
+                totalScore += parseInt(value);
+            }
+
+            let result = '';
+            if (totalScore <= 10) {
+                result = 'Your leadership style is Coercive.';
+            } else if (totalScore <= 15) {
+                result = 'Your leadership style is Pacesetting.';
+            } else if (totalScore <= 20) {
+                result = 'Your leadership style is Coaching.';
+            } else if (totalScore <= 23) {
+                result = 'Your leadership style is Affiliative.';
+            } else {
+                result = 'Your leadership style is Authoritative.';
+            }
+
+            document.getElementById('result').textContent = result;
+
+            // Generate QR code
+            const quizLink = window.location.href;
+            document.getElementById('link').href = quizLink;
+            document.getElementById('link').textContent = quizLink;
+            QRCode.toCanvas(document.getElementById('qr-code'), quizLink, function (error) {
+                if (error) console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>
