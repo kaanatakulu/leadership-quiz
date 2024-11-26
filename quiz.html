@@ -50,22 +50,7 @@
             text-align: center;
             color: #333;
         }
-        #qr-code {
-            text-align: center;
-            margin-top: 20px;
-        }
-        #link {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 14px;
-            color: #007BFF;
-            text-decoration: none;
-        }
-        #link:hover {
-            text-decoration: underline;
-        }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -115,8 +100,6 @@
             <button type="button" class="submit-btn" onclick="calculateResult()">Submit</button>
         </form>
         <div id="result"></div>
-        <div id="qr-code"></div>
-        <a id="link" href="#" target="_blank">Copyable Link to the Quiz</a>
     </div>
 
     <script>
@@ -125,10 +108,12 @@
             const answers = new FormData(form);
             let totalScore = 0;
 
+            // Calculate total score
             for (let value of answers.values()) {
                 totalScore += parseInt(value);
             }
 
+            // Determine leadership style
             let result = '';
             if (totalScore <= 10) {
                 result = 'Your leadership style is Coercive.';
@@ -143,14 +128,6 @@
             }
 
             document.getElementById('result').textContent = result;
-
-            // Generate QR code
-            const quizLink = window.location.href;
-            document.getElementById('link').href = quizLink;
-            document.getElementById('link').textContent = quizLink;
-            QRCode.toCanvas(document.getElementById('qr-code'), quizLink, function (error) {
-                if (error) console.error(error);
-            });
         }
     </script>
 </body>
